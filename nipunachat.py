@@ -3,8 +3,6 @@ from openai import AzureOpenAI
 import pandas as pd
 import pdfplumber
 import tempfile
-import pytesseract
-from PIL import Image
 
 # Azure OpenAI Client
 client = AzureOpenAI(
@@ -47,9 +45,6 @@ if uploaded_file and not st.session_state.file_uploaded:
     elif "excel" in file_type or "spreadsheet" in file_type:
         df = pd.read_excel(tmp_path)
         file_text = df.to_markdown()
-    elif "jpeg" in file_type or "jpg" in file_type or "png" in file_type:
-        image = Image.open(tmp_path)
-        file_text = pytesseract.image_to_string(image)
 
     if file_text:
         st.session_state.messages.append({
